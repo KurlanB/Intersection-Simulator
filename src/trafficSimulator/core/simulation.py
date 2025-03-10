@@ -34,7 +34,7 @@ class Simulation:
         self.vehicles[veh.id] = veh
         if len(veh.path) > 0:
             self.segments[veh.path[0]].add_vehicle(veh)
-        if(veh.getColour() == (255, 0, 0)):
+        if(veh.getColour() != (0, 180, 0)):
             self.emCount += 1
         
     def add_segment(self, seg):

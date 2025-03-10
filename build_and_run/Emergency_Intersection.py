@@ -12,9 +12,9 @@ class Intersection:
         length = 102
 #---------------------------------------------------------------Variables----------------------------------------------------------------------------#
         self.vehicle_rate = 10
-        self.v = 17
+        self.v = 20
         self.speed_variance = 0
-        self.self_driving_vehicle_proportion = 0.9 #number between 0 and 1, 0 means no self driving vehicles, 1 means entirely self driving vehicles
+        self.self_driving_vehicle_proportion = 0.95 #number between 0 and 1, 0 means no self driving vehicles, 1 means entirely self driving vehicles
 #----------------------------------------------------------------------------------------------------------------------------------------------------#
     #this section defines all the paths that a vehicle can take
     # SOUTH, EAST, NORTH, WEST
@@ -54,10 +54,10 @@ class Intersection:
     # SOUTH, EAST, NORTH, WEST
         #Right turn
             #paths 24-27 
-        self.sim.create_quadratic_bezier_curve((lane_space*3/2 + island_width/2, intersection_size/2), (lane_space*3/2 + island_width/2, lane_space*3/2 + island_width/2), (intersection_size/2, lane_space*3/2 + island_width/2))
-        self.sim.create_quadratic_bezier_curve((intersection_size/2, -lane_space*3/2 - island_width/2), (lane_space*3/2 + island_width/2, -lane_space*3/2 - island_width/2), (lane_space*3/2 + island_width/2, -intersection_size/2))
-        self.sim.create_quadratic_bezier_curve((-lane_space*3/2 - island_width/2, -intersection_size/2), (-lane_space*3/2 - island_width/2, -lane_space*3/2 - island_width/2), (-intersection_size/2, -lane_space*3/2 - island_width/2))
-        self.sim.create_quadratic_bezier_curve((-intersection_size/2, lane_space*3/2 + island_width/2), (-lane_space*3/2 - island_width/2, lane_space*3/2 + island_width/2), (-lane_space*3/2 - island_width/2, intersection_size/2))
+        self.sim.create_quadratic_bezier_curve((lane_space*3/2 + island_width/2, intersection_size/2 + length/3), (lane_space*3/2 + island_width/2, lane_space*3/2 + island_width/2), (intersection_size/2 + length/3 , lane_space*3/2 + island_width/2))
+        self.sim.create_quadratic_bezier_curve((intersection_size/2 + length/3, -lane_space*3/2 - island_width/2), (lane_space*3/2 + island_width/2, -lane_space*3/2 - island_width/2), (lane_space*3/2 + island_width/2, -intersection_size/2 - length/3))
+        self.sim.create_quadratic_bezier_curve((-lane_space*3/2 - island_width/2, -intersection_size/2 - length/3), (-lane_space*3/2 - island_width/2, -lane_space*3/2 - island_width/2), (-intersection_size/2 - length/3, -lane_space*3/2 - island_width/2))
+        self.sim.create_quadratic_bezier_curve((-intersection_size/2 - length/3, lane_space*3/2 + island_width/2), (-lane_space*3/2 - island_width/2, lane_space*3/2 + island_width/2), (-lane_space*3/2 - island_width/2, intersection_size/2 + length/3))
 
         # Left turn
             #paths 28-31
@@ -81,6 +81,29 @@ class Intersection:
         self.sim.define_interfearing_paths([6, 31], [2, 18],turn=True)
         self.sim.define_interfearing_paths([6, 31], [3, 19],turn=True)
 
+        #Turn right 
+        
+        # START SOUTH 32
+        self.sim.create_segment((lane_space*3/2 + island_width/2, length+ intersection_size/2), (lane_space*3/2+island_width/2, intersection_size/2 + length/3)) 
+        # END SOUTH 33
+        self.sim.create_segment((intersection_size/2 + length/3, lane_space*3/2 + island_width/2), (length+intersection_size/2, lane_space*3/2 + island_width/2))
+
+        # START EAST 34
+        self.sim.create_segment((length + intersection_size/2, -lane_space*3/2 - island_width/2), (intersection_size/2 + length/3, - lane_space*3/2 - island_width/2)) 
+        # END EAST 35
+        self.sim.create_segment((lane_space*3/2 + island_width/2, -intersection_size/2 - length/3), (lane_space*3/2 + island_width/2, -length-intersection_size/2))
+
+        # START NORTH 36
+        self.sim.create_segment((-lane_space*3/2 - island_width/2, -length - intersection_size/2), (-lane_space*3/2 - island_width/2, -intersection_size/2 - length/3))
+        # END NORTH 37
+        self.sim.create_segment((-intersection_size/2 - length/3, -lane_space*3/2 - island_width/2), (-length - intersection_size/2, -lane_space*3/2 - island_width/2))
+        
+        # START WEST 38
+        self.sim.create_segment((-length - intersection_size/2, lane_space*3/2 + island_width/2), (-intersection_size/2 - length/3, lane_space*3/2 + island_width/2))
+        # END WEST 39
+        self.sim.create_segment((-lane_space*3/2 - island_width/2, intersection_size/2 + length/3), (-lane_space*3/2 - island_width/2, length + intersection_size/2))
+        
+        
         '''
         this section creates vehicle generators, we have two vehicle generators one; that creates regular vehicles (self.vg)
         and one that creates self-driving vehicles (self.sdvg)
@@ -95,25 +118,25 @@ class Intersection:
                 #South [Inner Straight, Outer Straight, Right Turn, Left Turn]
                 (1, {'path': [0, 16, 12], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [1, 17, 13], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
-                (1, {'path': [1, 24, 11], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
+                (1, {'path': [32, 24, 33], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [0, 28, 14], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
 
                 #East [Inner Straight, Outer Straight, Right Turn, Left Turn]
                 (1, {'path': [2, 18, 14], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [3, 19, 15], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
-                (1, {'path': [3, 25, 13], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
+                (1, {'path': [34, 25, 35], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [2, 29, 8], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
 
                 #North [Inner Straight, Outer Straight, Right Turn, Left Turn]
                 (1, {'path': [4, 20, 8], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [5, 21, 9], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
-                (1, {'path': [5, 26, 15], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
+                (1, {'path': [36, 26, 37], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [4, 30, 10], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
            
                 #West [Inner Straight, Outer Straight, Right Turn, Left Turn]
                 (1, {'path': [6, 22, 10], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [7, 23, 11], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
-                (1, {'path': [7, 27, 9], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
+                (1, {'path': [38, 27, 39], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 (1, {'path': [6, 31, 12], 'v_max': self.v+ 2*self.speed_variance*np.random.random() -self.speed_variance, 'colour': (255, 0, 0)}),
                 ], 'vehicle_rate' : self.vehicle_rate*(1-self.self_driving_vehicle_proportion) 
             })
@@ -129,28 +152,28 @@ class Intersection:
             #'s0' defines the shortest distance a vehicle is able to drive behind another vehicle
             'vehicles': [
                 #South [Inner Straight, Outer Straight, Right Turn, Left Turn]
-                (1, {'path': [0, 16, 12], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [1, 17, 13], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [1, 24, 11], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [0, 28, 14], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
+                (1, {'path': [0, 16, 12], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [1, 17, 13], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [32, 24, 33], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [0, 28, 14], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
 
                 #East [Inner Straight, Outer Straight, Right Turn, Left Turn]
-                (1, {'path': [2, 18, 14], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [3, 19, 15], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [3, 25, 13], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [2, 29, 8], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
+                (1, {'path': [2, 18, 14], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [3, 19, 15], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [34, 25, 35], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [2, 29, 8], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
 
                 #North [Inner Straight, Outer Straight, Right Turn, Left Turn]
-                (1, {'path': [4, 20, 8], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [5, 21, 9], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [5, 26, 15], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [4, 30, 10], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
+                (1, {'path': [4, 20, 8], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [5, 21, 9], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [36, 26, 37], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [4, 30, 10], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
            
                 #West [Inner Straight, Outer Straight, Right Turn, Left Turn]
-                (1, {'path': [6, 22, 10], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [7, 23, 11], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [7, 27, 9], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
-                (1, {'path': [6, 31, 12], 'v_max': self.v ,'T' : 0.1,'s0' : 4, 'colour': (0, 0, 180)}),
+                (1, {'path': [6, 22, 10], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [7, 23, 11], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [38, 27, 39], 'v_max': self.v, 'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
+                (1, {'path': [6, 31, 12], 'v_max': self.v ,'T' : 0.1,'s0' : 4, 'colour': (0, 180, 0)}),
                 ], 'vehicle_rate' : self.vehicle_rate*self.self_driving_vehicle_proportion 
             })
         

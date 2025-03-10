@@ -1,4 +1,4 @@
-from base_intersection import *
+from New_Intersection import *
 
 #defining the intersection
 intersection = Intersection()
