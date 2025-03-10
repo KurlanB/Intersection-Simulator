@@ -32,7 +32,12 @@
   </p>
 </div>
 
+## Changes Made
+**Student:** Kurlan Beeharry
 
+**Course:** 2PX3 - Engineering Communications
+
+**Project:** Sprint 2 - Intersection Redesign to account for new Hopsital
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
