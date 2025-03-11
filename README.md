@@ -41,7 +41,7 @@
 
 **Modifications:**
 
-  ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Self-Driving Intersection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Base Intersection
+  ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Self-Driving Intersection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Base Intersection
 
 <div align="center">
   <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzZ2c3FubzFvbGtncm5tYm53a3FyNzRydnh4eXN5OHhkZmwwMW40NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AhIoSiKNmAKP3zWSZW/giphy.gif" width="300" height="300" />  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXNkZjFxcW8zYjk2czgzajlyemVmcGoyOTI1bHY3bjB6bXhyOG9vOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cjBRPeFqrWcjC0lTCN/giphy.gif" width="300" height="300" />
