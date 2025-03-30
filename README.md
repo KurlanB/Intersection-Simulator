@@ -25,8 +25,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h3 align="center">trafficSimulator</h3>
-
+  <h3 align="center">TrafficSimulator</h3>
+  
   <p align="center">
     A microscopic traffic simulator in Python.
   </p>
